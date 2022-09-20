@@ -1,10 +1,25 @@
+/**
+ * @file main.cpp
+ * @author Kairav Parekh
+ * @brief The main C++ file that contains the lexer, parser and interpreter
+ *        Check the README file to learn the rules of this interpreter
+ * @version 0.1
+ * @date 2022-09-20
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #include <iostream>
 #include <vector>
-#include <map>
 #include <unordered_map>
 #include <stack>
 #include <string>
 
+/**
+ * @brief The each number repersents 
+ * what kind of token the lexer scanned
+ */
 enum Token {
     tok_eof = -2,
     tok_endline = -7,
@@ -18,9 +33,9 @@ enum Token {
     tok_operator = -6
 };
 
-std::string IdentifierStr = "";
-double NumVal;
-std::string Operator;
+static std::string IdentifierStr = "";
+static double NumVal;
+static std::string Operator;
 
 std::unordered_map<std::string, double> data;
 
@@ -94,28 +109,33 @@ static int gettok() {
 }
 
 static int CurTok;
+
+/**
+ * @brief Get the Next Token object
+ * 
+ * @return int 
+ */
 static int getNextToken() {
     return CurTok = gettok();
 }
 
-static std::map<char, int> BinopPrecedence; // Holds the Precedence of each operator
-
-static int GetTokPrecedence() {
-  if (!isascii(CurTok))
-    return -1;
-
-  // Make sure it's a declared binop.
-  int TokPrec = BinopPrecedence[CurTok];
-  if (TokPrec <= 0)
-    return -1;
-  return TokPrec;
-}
-
+/**
+ * @brief A helper method to print out an error
+ * 
+ * @param Str 
+ * @return int 
+ */
 int LogError(const char *Str) {
     fprintf(stderr, "Error: %s\n", Str);
     return -1;
 }
 
+/**
+ * @brief Returns precedence of an arithmetical operator
+ * 
+ * @param op 
+ * @return int 
+ */
 int precedence(char op) {
     if(op == '+'||op == '-')
         return 1;
@@ -124,17 +144,33 @@ int precedence(char op) {
     return 0;
 }
 
+/**
+ * @brief Method to carry out an operaton on the operands
+ *        depending on the operator
+ * 
+ * @param a The first operand
+ * @param b The second operand
+ * @param op The operator
+ * @return double The result after performing the operation
+ */
 double applyOp(double a, double b, char op) {
     switch(op){
         case '+': return a + b;
         case '-': return a - b;
         case '*': return a * b;
         case '/': return a / b;
+        default: return -1;
     }
 }
 
 bool invalidSyntax = false;
 
+/**
+ * @brief Evalute an arithemtic  expression
+ * 
+ * @return double 
+ * The final result after evaluating an arithmetic expression
+ */
 double EvaluateRHS() {
     if (CurTok == tok_endline) {
         LogError("Invalid Syntax");
@@ -144,6 +180,7 @@ double EvaluateRHS() {
     }
     std::vector<std::string> tokens;
     
+    // Add each token to a vector of strings
     while (CurTok != tok_endline) {
         if (CurTok == tok_number) {
             tokens.push_back(std::to_string(NumVal));
@@ -174,6 +211,8 @@ double EvaluateRHS() {
     std::stack<char> operations;
 
     values.push(0);
+
+    // Evalute the expression using 2 stacks
 
     for (int i = 0; i < tokens.size(); i++) {
         if (tokens[i] == "(") {
@@ -226,11 +265,16 @@ double EvaluateRHS() {
     }
 
     double ans = values.top();
-    // getNextToken();
     return ans;
 
 }
 
+/**
+ * @brief Method to handle an identifier
+ * If there is an '=' followed, it would indicate that there is an expression followed by
+ * Else, just print out the value stored in a variable with the name as the identifier
+ * 
+ */
 void HandleIdentifier() {
     if (CurTok != tok_identifier) {
         LogError("Invalid Identifier");
@@ -264,6 +308,12 @@ void HandleIdentifier() {
     }
 }
 
+/**
+ * @brief Handle the print command
+ * 
+ * Eat up the "print" and then evalute the expression that is followed by
+ * 
+ */
 void HandlePrint() {
     getNextToken();
     if (CurTok == tok_number) {
@@ -288,11 +338,19 @@ void HandlePrint() {
     }
 }
 
+/**
+ * @brief Method to handle numbers input in the console
+ * 
+ */
 void HandleNumber() {
     double res = EvaluateRHS();
     fprintf(stderr, "%f\n", res);
 }
 
+/**
+ * @brief The mainloop
+ * 
+ */
 static void MainLoop() {
     int lineNumber = 1;
     while(true) {
