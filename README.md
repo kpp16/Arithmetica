@@ -15,24 +15,40 @@ An interpreter built using C++ to evaluate mathematical expressions.
 1. Run the executable file
 
 #### Syntax:
-1. Print statements
-	Prints variables, numbers and mathematical expressions into the console
+1. **Print statements**:
+
+	Prints variables, numbers and mathematical expressions into the console.
+	
 	Usage:
-		`print 2+3`
-		`print x`
-		`print x + y - (z + 3) * a`
-		<br>
-2. Defining variables
-	A variable (identifier) is a set of alphanumeric ASCII characters used to represent a `double` 
+	```
+	print 2+3;
+	print x;
+	print x + y - (z + 3) * a;
+	```
+	
+
+2. **Defining variables**:
+
+	A variable (identifier) is a set of alphanumeric ASCII characters used to represent a `double`.
+	
 	Usage:
-		`rad = 10.54`
-		`pi = 3.14`
-		`area = pi * rad * rad`
-		<br>
-3. Evaluating expressions
-	An expression is defined as arithmetical expression that involves variables and numbers
-	Examples:
+	```
+	rad = 10.45;
+	pi = 3.1415;
+	circum = 2 * pi * rad;
+	area = pi * rad * rad;
+	```
+	
+3. **Evaluating expressions**:
+
+	An expression is defined as arithmetical expression that involves variables and numbers.
+	
+	Examples
+	
 	`3 * (4/a - 2*b) - (2/a)`
+
+
+**End of each statement is followed by a semicolon `;`**
   
 <br>
 
@@ -51,7 +67,7 @@ g++ -g main.cpp -o main
 
 
 ## TODO:
-1. Fix bugs - there are a lot of them!
-2. Add ASTs and make a proper interpreter
-3. Use LLVM and generate IR code
-4. Add more datatypes and more keywords
+1. Fix bugs.
+2. Add ASTs and make a proper interpreter.
+3. Use LLVM and generate IR code.
+4. Add more datatypes and more keywords.
