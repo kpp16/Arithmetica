@@ -43,7 +43,7 @@ An interpreter built using C++ to evaluate mathematical expressions.
 
 	An expression is defined as arithmetical expression that involves variables and numbers.
 	
-	Examples
+	Example:
 	
 	`3 * (4/a - 2*b) - (2/a)`
 
