@@ -1,11 +1,11 @@
-<h2 align="center">Arithmetica: Simple Math Interpreter</h2>
+<h1 align="center">Arithmetica: Simple Math Interpreter</h1>
 <hr>
 
-### About
+## About
 An interpreter built using C++ to evaluate mathematical expressions.
 
 
-### Key Features
+## Key Features
 1. Define and change variables
 2. The only supported datatype right now is a C++ `double`
 3. Runs using the scanner (lexing) and the parser (will change the codebase to add AST later)
@@ -14,7 +14,7 @@ An interpreter built using C++ to evaluate mathematical expressions.
 ## How To Use
 1. Run the executable file
 
-#### Syntax:
+### Syntax:
 1. **Print statements**:
 
 	Prints variables, numbers and mathematical expressions into the console.
@@ -64,7 +64,6 @@ Using the GNU GCC compiler:
 g++ -g main.cpp -o main
 ./main
 ```
-
 
 ## TODO:
 1. Fix bugs.
